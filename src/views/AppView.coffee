@@ -39,5 +39,5 @@ class window.AppView extends Backbone.View
     @$el.append(node)
 
   reset: ->
-    $('body').html('');
-    new AppView(model: new App()).$el.appendTo 'body'
+    # $('body').html('');
+    # new AppView(model: new App()).$el.appendTo 'body'
