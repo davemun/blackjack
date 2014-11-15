@@ -8,12 +8,11 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('dealerHand').stand(@model.get('playerHand'))
-    'playerWin': -> @win()
-    'playerLose': -> @lose()
-    'tie': -> @tie()
-
 
   initialize: ->
+    @model.get('dealerHand').on 'playerWin', => @win()
+    @model.get('dealerHand').on 'playerLose', => @lose()
+    @model.get('dealerHand').on 'tie', => @tie()
     @render()
 
   render: ->
@@ -24,13 +23,13 @@ class window.AppView extends Backbone.View
 
   win: ->
     console.log("won")
-    node = $('<span></span>').text("PLAYER WINS")
-    @$el.prepend(node)
+    node = $('<span></span>').text("PLAYER WINS").addClass("outcome")
+    @$el.append(node)
   lose: ->
     console.log("lost")
-    node = $('<span></span>').text("PLAYER LOSES")
-    @$el.prepend(node)
+    node = $('<span></span>').text("PLAYER LOSES").addClass("outcome")
+    @$el.append(node)
   tie: ->
     console.log("tie")
-    node = $('<span></span>').text("TIE GAME")
-    @$el.prepend(node)
+    node = $('<span></span>').text("TIE GAME").addClass("outcome")
+    @$el.append(node)

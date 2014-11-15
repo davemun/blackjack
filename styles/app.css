@@ -30,3 +30,11 @@
 .show-false {
   display: none;
 }
+
+.outcome {
+    padding: 30px;
+    font-size: 50px;
+    position: fixed;
+    font-family: Sans Serif;
+    color: #F00;
+}
