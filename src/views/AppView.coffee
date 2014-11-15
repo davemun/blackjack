@@ -1,6 +1,8 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
+    <button class="hit-button">Hit</button>
+    <button class="stand-button">Stand</button>
+    <button class="reset-button">New Deal</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -8,8 +10,10 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('dealerHand').stand(@model.get('playerHand'))
+    'click .reset-button': -> @reset();
 
   initialize: ->
+    @model.get('playerHand').on 'playerLose', => @lose()
     @model.get('dealerHand').on 'playerWin', => @win()
     @model.get('dealerHand').on 'playerLose', => @lose()
     @model.get('dealerHand').on 'tie', => @tie()
@@ -33,3 +37,7 @@ class window.AppView extends Backbone.View
     console.log("tie")
     node = $('<span></span>').text("TIE GAME").addClass("outcome")
     @$el.append(node)
+
+  reset: ->
+    $('body').html('');
+    new AppView(model: new App()).$el.appendTo 'body'

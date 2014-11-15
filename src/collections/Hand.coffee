@@ -8,8 +8,9 @@ class window.Hand extends Backbone.Collection
   hit: ->
     x = @deck.last()
     @add(@deck.pop())
-    if @scores()[0] > 21
+    if @scores()[0] > 21 and not @isDealer
       @.trigger("bust")
+      @.trigger("playerLose")
     x
 
   stand: (playerhand) ->
@@ -20,7 +21,7 @@ class window.Hand extends Backbone.Collection
       @.trigger("playerWin")
     #needs logic for dealer hand > player hand
     #passed in playAerhand fromAppView.coffee line 10
-    if @scores()[0] > playerhand.scores()[0]
+    else if @scores()[0] > playerhand.scores()[0]
       @.trigger("playerLose")
     else if @scores()[0] < playerhand.scores()[0]
       @.trigger("playerWin")
